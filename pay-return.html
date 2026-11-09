@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2b241a" />
+  <meta name="robots" content="noindex" />
+  <title>מעבדים את התשלום…</title>
+  <style>
+    html,body{height:100%}
+    body{margin:0;background:#2b241a;color:#f3efe6;font-family:"Assistant","Segoe UI","Arial Hebrew",Arial,sans-serif;display:grid;place-items:center;text-align:center}
+    .box{display:flex;flex-direction:column;align-items:center;gap:16px}
+    .spin{width:38px;height:38px;border-radius:50%;border:3px solid rgba(201,164,106,.25);border-top-color:#c9a46a;animation:s .8s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion: reduce){.spin{animation-duration:2.4s}}
+    p{margin:0;color:rgba(243,239,230,.78);font-size:15px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spin" aria-hidden="true"></div>
+    <p>מעבדים את התשלום, עוד רגע…</p>
+  </div>
+  <script>
+    (function () {
+      // UPAY טוען את הדף הזה בתוך ה-iframe של התשלום, עם תוצאת העסקה בפרמטרים.
+      // מעבירים את החלון העליון לדף התודה (הצלחה) או חזרה למקטע התשלום (כישלון).
+      // אותו מנגנון כמו בנדל״ן החי.
+      var p = new URLSearchParams(location.search);
+      var err = p.get("errormessage");
+      var pd = (p.get("providererrordescription") || "").toUpperCase();
+      var tx = p.get("transactionid") || "";
+      var failed = !!err || (pd !== "SUCCESS" && !tx);
+
+      // ייחוס מפיצים: ה-utm שרד את הסבב של UPAY ב-returnurl. מדווחים אותו + מספר העסקה
+      // ל-hook הייעודי של "אירועי דף נחיתה" (לעולם לא ה-hook של מאני-צ'אט).
+      var ATTRIBUTION_WEBHOOK_URL = "https://hook.eu2.make.com/mu61xo25bwjq2wojr7dzxkcldiofovrm";
+      try {
+        if (ATTRIBUTION_WEBHOOK_URL && !failed) {
+          var body = new URLSearchParams({
+            type: "payment",
+            page: "black-friday",
+            txid: tx,
+            amount: p.get("amount") || "",
+            utm_source: p.get("utm_source") || "",
+            utm_medium: p.get("utm_medium") || ""
+          });
+          navigator.sendBeacon(ATTRIBUTION_WEBHOOK_URL, body);
+        }
+      } catch (e) {}
+
+      // כישלון: חוזרים למקטע התשלום ושומרים את ה-UTM. הצלחה: דף התודה עם מספר העסקה (purchase אחד לכל עסקה)
+      var keep = new URLSearchParams();
+      ["utm_source", "utm_medium"].forEach(function (k) { if (p.get(k)) keep.set(k, p.get(k)); });
+      keep.set("payment", "failed");
+      var dest = failed ? "./?" + keep.toString() + "#register" : "./toda.html?tx=" + encodeURIComponent(tx);
+      var target = window.top || window;
+      try {
+        target.location.href = new URL(dest, location.href).href;
+      } catch (e) {
+        location.href = dest;
+      }
+    })();
+  </script>
+</body>
+</html>

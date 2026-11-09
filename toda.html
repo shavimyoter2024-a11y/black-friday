@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2b241a" />
+  <meta name="robots" content="noindex" />
+  <title>נשמר לכם מקום | בלאק פריידי · שווים יותר</title>
+  <link rel="icon" href="assets/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Heebo:wght@800;900&display=swap" rel="stylesheet" />
+
+  <!-- GA4: זרם "דפי נחיתה". purchase = הגעה לדף התודה אחרי תשלום (כמו בנדל״ן), פעם אחת בסשן -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR923MZ0BW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date()); gtag("config", "G-NR923MZ0BW");
+    (function () {
+      // purchase רק כשיש מספר עסקה מ-UPAY, ופעם אחת לכל עסקה (רענון לא סופר שוב)
+      var tx = (new URLSearchParams(location.search).get("tx") || "").slice(0, 80);
+      if (!tx) return;
+      var key = "bf_purchase_" + tx, sent = false;
+      try { sent = localStorage.getItem(key) === "1"; } catch (e) {}
+      if (sent) return;
+      gtag("event", "purchase", { page_id: "black-friday", transaction_id: tx, currency: "ILS", value: 500, items: [{ item_name: "קורס שוק ההון" }, { item_name: "קורס נדל״ן" }] });
+      try { localStorage.setItem(key, "1"); } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    :root {
+      --hero: #2b241a; --gold: #c9a46a; --gold-hi: #e0c48f; --gold-edge: #7a5f36; --gold-ink: #8a6513;
+      --cream: #f3efe6; --paper: #f6f1e7; --ink: #1f1a12; --ink-dim: #4a4132; --key-ink: #1a150c;
+      --f-display: "Heebo", "Assistant", system-ui, sans-serif; --f-body: "Assistant", "Heebo", system-ui, sans-serif;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; text-align: center; }
+    h1, p { margin: 0; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; border-radius: 6px; }
+    .top { background: var(--hero); color: var(--cream); padding: 28px 24px 56px; }
+    .logo { height: 52px; width: auto; margin: 0 auto; display: block; }
+    .check {
+      width: 84px; height: 84px; border-radius: 50%; margin: 36px auto 22px; display: grid; place-items: center;
+      border: 1.5px solid var(--gold); background: rgba(201, 164, 106, .08); animation: pop .6s var(--ease) both;
+    }
+    .check svg { width: 40px; height: 40px; }
+    .check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw .6s .25s var(--ease) forwards; }
+    @keyframes pop { from { transform: scale(.7); opacity: 0; } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    h1 { font: 900 clamp(32px, 9vw, 56px)/1.08 var(--f-display); letter-spacing: -.02em; }
+    h1 span { display: block; color: var(--gold); }
+    .lead { margin: 16px auto 0; max-width: 40ch; color: rgba(243, 239, 230, .82); font-size: clamp(16px, 2vw, 19px); }
+    .groups { max-width: 460px; margin: -28px auto 0; padding: 28px 24px 24px; background: #fffdf8; border: 1px solid #d6bd8c; border-radius: 22px; box-shadow: 0 1px 2px rgba(70, 50, 20, .06), 0 20px 40px -28px rgba(70, 50, 20, .34); }
+    .wrap { padding: 0 24px 56px; }
+    .groups p { font-weight: 700; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; width: 100%; min-height: 56px; padding: 0 20px; margin-top: 16px;
+      border-radius: 12px; background: var(--gold); color: var(--key-ink); font: 800 18px/1.15 var(--f-body); text-decoration: none;
+      box-shadow: 0 4px 0 var(--gold-edge), 0 12px 22px -12px rgba(0, 0, 0, .5); transition: transform .08s ease-out, box-shadow .08s ease-out, background-color .18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover { background: var(--gold-hi); }
+    .btn:active, .btn.is-down { transform: translateY(4px); box-shadow: 0 0 0 var(--gold-edge); }
+    .more { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; margin-top: 20px; }
+    .more a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--gold-ink); text-underline-offset: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      .check, .check path { animation: none; stroke-dashoffset: 0; }
+      .btn { transition: none; } .btn:active, .btn.is-down { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <img class="logo" src="assets/logo-cream.webp" alt="שווים יותר" width="160" height="128" />
+    <div class="check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#c9a46a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h1>נשמר לכם מקום <span>בשני הקורסים.</span></h1>
+    <p class="lead">אישור עם כל הפרטים בדרך אליכם בוואטסאפ ובמייל.</p>
+  </header>
+
+  <main class="wrap">
+    <div class="groups">
+      <p>בינתיים, הצטרפו לקבוצות של שני הקורסים:</p>
+      <!-- קישורי הקבוצות דרך המקצר של טום (הוא מחליף את ההזמנה מאחוריו). לא להדביק קישור קבוצה גולמי -->
+      <a class="btn" href="https://7yojte.s.gy/shookhhaon" target="_blank" rel="noopener" data-cta="group-shuk">מצטרפים לקבוצת שוק ההון</a>
+      <a class="btn" href="https://7yojte.s.gy/korsnadlan" target="_blank" rel="noopener" data-cta="group-nadlan">מצטרפים לקבוצת הנדל״ן</a>
+    </div>
+    <div class="more">
+      <a href="https://wa.me/972587929195" target="_blank" rel="noopener">לדבר איתנו בוואטסאפ</a>
+      <a href="./">חזרה לדף</a>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("[data-cta]");
+        if (a && window.gtag) window.gtag("event", "cta_click", { page_id: "black-friday", location: a.getAttribute("data-cta") });
+      });
+      document.addEventListener("pointerdown", function (e) { var b = e.target.closest && e.target.closest(".btn"); if (b) b.classList.add("is-down"); });
+      ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) {
+        document.addEventListener(ev, function () { document.querySelectorAll(".btn.is-down").forEach(function (b) { b.classList.remove("is-down"); }); }, true);
+      });
+    })();
+  </script>
+  <script src="meta-pixel.js?v=20261109" data-page="black-friday" defer></script>
+</body>
+</html>
