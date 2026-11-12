@@ -494,6 +494,11 @@
     .x:hover { background: rgba(243, 239, 230, .08); color: var(--cream); }
     .x svg { width: 18px; height: 18px; }
     .cb { padding-top: 18px; }
+    .hero-form { margin-top: 22px; padding: 22px 20px 18px; border: 1px solid var(--line); border-radius: var(--r-lg); background: rgba(36, 31, 23, .88); text-align: start; }
+    .hero-form .hf-title { font: 900 24px/1.2 var(--f-display); text-align: center; color: var(--cream); }
+    .hero-form .cb { padding-top: 0; }
+    .hero-form .cb > p { margin-top: 6px; }
+    .hero-form .btn { width: 100%; }
     .cb h3 { font: 900 26px/1.2 var(--f-display); text-align: center; }
     .cb > p { margin-top: 6px; text-align: center; color: var(--cream-dim); font-size: 16px; }
     .cb form { margin-top: 18px; display: grid; gap: 14px; }
@@ -640,8 +645,30 @@
             <p class="deadline" data-show="pre" hidden>המבצע בתוקף עד <b>יום שני 16.11 ב-20:00</b></p>
           </div>
 
-          <div class="hero-cta" data-show="open" hidden>
-            <button class="btn" type="button" data-open-cb data-cta="hero">לקבלת פרטים מנציג</button>
+          <!-- הטופס פתוח בהירו: זו האופציה היחידה בדף (טום 12/11), בלי כפתור ובלי חלונית -->
+          <div class="hero-form" id="register" data-section="register" data-hide="closed">
+            <h2 class="hf-title">לקבלת פרטים מנציג</h2>
+            <div class="cb">
+      <p>השאירו שם וטלפון, ונציג יחזור אליכם עם כל הפרטים על המבצע.</p>
+      <form id="cbForm" novalidate>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="field"><label for="cbName">שם מלא</label><input id="cbName" name="full_name" type="text" autocomplete="name" required /></div>
+        <div class="field"><label for="cbPhone">טלפון נייד</label><input id="cbPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-1234567" required /></div>
+        <label class="consent"><input type="checkbox" name="consent" required /><span class="box" aria-hidden="true"></span><span>מאשרים לשווים יותר לחזור אליי בנושא הקורסים, לפי <a href="terms.html" target="_blank" rel="noopener">תנאי השימוש</a> ו<a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</span></label>
+        <label class="consent"><input type="checkbox" name="marketing" /><span class="box" aria-hidden="true"></span><span>אשמח לקבל עדכונים והטבות משווים יותר.</span></label>
+        <p class="cb-msg" id="cbMsg" role="alert" aria-live="assertive"></p>
+        <button class="btn" type="submit">שנציג יחזור אליי</button>
+        <p class="no-commit">בלי התחייבות</p>
+      </form>
+      <div class="cb-fail" id="cbFail" role="alert" hidden>
+        <p>משהו השתבש בשליחה. נסו שוב, או כתבו לנו בוואטסאפ ונטפל בזה.</p>
+        <a class="btn alt" id="cbWa" href="https://wa.me/972587929195" target="_blank" rel="noopener">לדבר איתנו בוואטסאפ</a>
+      </div>
+      <div class="cb-ok" id="cbOk" tabindex="-1" hidden>
+        <b>קיבלנו.</b>
+        <p>נציג יחזור אליכם בטלפון. רוצים תשובה כבר עכשיו? <a href="https://wa.me/972587929195" target="_blank" rel="noopener">כתבו לנו בוואטסאפ</a></p>
+      </div>
+                  </div>
           </div>
 
           <div class="nojs-note" data-show="nojs">
@@ -662,7 +689,8 @@
       </ul>
     </div></div>
 
-    <!-- ═════ 2. מה בחבילה ═════ -->
+
+    <!-- ═════ 3. מה בחבילה ═════ -->
     <section class="sec light cream" id="bundle" data-section="bundle" data-hide="closed" aria-labelledby="bundle-title">
       <div class="wrap">
         <div class="sec-head reveal">
@@ -850,31 +878,6 @@
       </div>
     </section>
 
-    <!-- ═════ 7. תשלום ═════ -->
-    <section class="sec dark" id="register" data-section="register" data-hide="closed" aria-labelledby="r-title">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="kicker">קבלת פרטים</p>
-          <h2 class="h2" id="r-title">מקום בשני הקורסים, <span class="g">בשיחה אחת.</span></h2>
-        </div>
-
-        <div class="pay reveal">
-          <div class="fail" id="payFailed" role="alert" hidden>
-            <p><b>התשלום לא עבר.</b> אפשר לנסות שוב למטה, או לשלם בביט. חויבתם בכל זאת? כתבו לנו בוואטסאפ <a href="https://wa.me/972587929195" target="_blank" rel="noopener"><bdi>058-792-9195</bdi></a> ונסדר את זה.</p>
-          </div>
-
-          <div class="sum">
-              <span class="k">מחיר המבצע</span>
-              <span class="v num">500<small>&nbsp;₪</small></span>
-              <span class="w">שני הקורסים</span>
-            </div>
-            <p class="limited">מספר המקומות מוגבל</p>
-            <div class="pay-main"><button class="btn" type="button" id="cbOpen" data-open-cb data-cta="register" aria-haspopup="dialog" aria-controls="cbSheet">לקבלת פרטים מנציג</button></div>
-            <p class="secure">נציג חוזר אליכם בטלפון, בלי התחייבות</p>
-                  </div>
-
-      </div>
-    </section>
   </main>
 
   <footer class="foot" data-section="footer">
@@ -897,37 +900,7 @@
 
   <div class="sticky" id="stickyCta" aria-hidden="true">
     <p class="st"><b class="num">500&nbsp;₪</b><span>נסגר בעוד <bdi class="num" id="stickyTime">00:00:00</bdi></span></p>
-    <button class="btn" type="button" tabindex="-1" data-open-cb data-cta="sticky">לקבלת פרטים מנציג</button>
-  </div>
-
-  <div class="sheet-wrap" id="cbSheetWrap" hidden>
-    <div class="sheet-bg" data-close></div>
-    <div class="sheet" id="cbSheet" role="dialog" aria-modal="true" aria-labelledby="cbTitle">
-      <div class="grab" aria-hidden="true"></div>
-      <button class="x" type="button" data-close aria-label="סגירה"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" /></svg></button>
-    <div class="cb">
-      <h3 id="cbTitle">קבלת פרטים מנציג</h3>
-      <p>השאירו שם וטלפון, ונציג יחזור אליכם עם כל הפרטים על המבצע.</p>
-      <form id="cbForm" novalidate>
-        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <div class="field"><label for="cbName">שם מלא</label><input id="cbName" name="full_name" type="text" autocomplete="name" required /></div>
-        <div class="field"><label for="cbPhone">טלפון נייד</label><input id="cbPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-1234567" required /></div>
-        <label class="consent"><input type="checkbox" name="consent" required /><span class="box" aria-hidden="true"></span><span>מאשרים לשווים יותר לחזור אליי בנושא הקורסים, לפי <a href="terms.html" target="_blank" rel="noopener">תנאי השימוש</a> ו<a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a>.</span></label>
-        <label class="consent"><input type="checkbox" name="marketing" /><span class="box" aria-hidden="true"></span><span>אשמח לקבל עדכונים והטבות משווים יותר.</span></label>
-        <p class="cb-msg" id="cbMsg" role="alert" aria-live="assertive"></p>
-        <button class="btn" type="submit">שנציג יחזור אליי</button>
-        <p class="no-commit">בלי התחייבות</p>
-      </form>
-      <div class="cb-fail" id="cbFail" role="alert" hidden>
-        <p>משהו השתבש בשליחה. נסו שוב, או כתבו לנו בוואטסאפ ונטפל בזה.</p>
-        <a class="btn alt" id="cbWa" href="https://wa.me/972587929195" target="_blank" rel="noopener">לדבר איתנו בוואטסאפ</a>
-      </div>
-      <div class="cb-ok" id="cbOk" tabindex="-1" hidden>
-        <b>קיבלנו.</b>
-        <p>נציג יחזור אליכם בטלפון. רוצים תשובה כבר עכשיו? <a href="https://wa.me/972587929195" target="_blank" rel="noopener">כתבו לנו בוואטסאפ</a></p>
-      </div>
-    </div>
-    </div>
+    <a class="btn" href="#register" tabindex="-1" data-cta="sticky">להשארת פרטים</a>
   </div>
 
   <script>
@@ -1037,9 +1010,7 @@
       document.getElementById("timerLabel").textContent = s === "pre" ? "נפתח בעוד" : "נסגר ביום שני 16.11 ב-20:00, בעוד";
       document.getElementById("timer").setAttribute("aria-label", s === "pre" ? "הזמן עד פתיחת המבצע" : "הזמן עד סוף המבצע");
       if (s === "closed") {
-        var sheetWasOpen = !wrapEl.hidden;
-        closeSheet(true);
-        if (sheetWasOpen || prev === "open") { try { document.getElementById("closedStamp").focus({ preventScroll: !sheetWasOpen }); } catch (e) {} }
+        if (prev === "open") { try { document.getElementById("closedStamp").focus({ preventScroll: true }); } catch (e) {} }
       }
       updateSticky();
     }
@@ -1073,43 +1044,9 @@
       sticky.querySelector(".btn").tabIndex = show ? 0 : -1;
     }
 
-    // ═════ חלונית "עוד מתלבטים" ═════
-    var wrapEl = document.getElementById("cbSheetWrap"), sheetEl = document.getElementById("cbSheet"), opener = document.getElementById("cbOpen");
-    var bgEls = [document.querySelector("header.top"), document.getElementById("main"), document.querySelector("footer.foot"), sticky];
-    var closeT = null;
-    function focusables() {
-      return Array.prototype.filter.call(sheetEl.querySelectorAll("button, a[href], input:not(.hp)"), function (el) { return el.offsetParent !== null && !el.disabled; });
-    }
-    function openSheet() {
-      clearTimeout(closeT);
-      wrapEl.hidden = false;
-      root.classList.add("sheet-open");   // גם מסתיר את באנר העוגיות בזמן שהחלונית פתוחה
-      root.style.overflow = "hidden"; document.body.style.overflow = "hidden";
-      bgEls.forEach(function (el) { if (el) el.inert = true; });
-      void wrapEl.offsetWidth;
-      wrapEl.classList.add("open");
-      var first = document.getElementById("cbName");
-      setTimeout(function () { try { (first.offsetParent ? first : sheetEl.querySelector(".x")).focus({ preventScroll: true }); } catch (x) {} }, 60);
-      
-    }
-    function closeSheet(silent) {
-      if (wrapEl.hidden || !wrapEl.classList.contains("open")) return;
-      wrapEl.classList.remove("open");
-      root.classList.remove("sheet-open");
-      bgEls.forEach(function (el) { if (el) el.inert = false; });
-      root.style.overflow = ""; document.body.style.overflow = "";
-      closeT = setTimeout(function () { wrapEl.hidden = true; }, reduce ? 200 : 340);
-      if (!silent) { try { opener.focus({ preventScroll: true }); } catch (x) {} }
-    }
-    document.querySelectorAll("[data-open-cb]").forEach(function (b) { b.addEventListener("click", function () { opener = b; openSheet(); }); });
-    wrapEl.querySelectorAll("[data-close]").forEach(function (el) { el.addEventListener("click", function () { closeSheet(); }); });
-    wrapEl.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") { e.preventDefault(); closeSheet(); return; }
-      if (e.key !== "Tab") return;
-      var f = focusables(); if (!f.length) return;
-      var a = f[0], z = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
-      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    // ═════ קפיצה לטופס: הכפתורים מובילים לטופס הפתוח ומעמידים את הסמן בשם ═════
+    document.querySelectorAll('a[href="#register"]').forEach(function (a) {
+      a.addEventListener("click", function () { setTimeout(function () { try { document.getElementById("cbName").focus({ preventScroll: true }); } catch (x) {} }, reduce ? 0 : 450); });
     });
 
     // ═════ הפעלה ═════
